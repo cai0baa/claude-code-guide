@@ -4,8 +4,7 @@ A bilingual (English / Portuguese) interactive reference for getting the most ou
 
 ## Live Site
 
-<!-- Update this URL after deploying to Vercel -->
-https://claude-code-guide.vercel.app
+https://claude-code-guide-iota.vercel.app
 
 ## Features
 
