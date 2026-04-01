@@ -1,4 +1,4 @@
-import { InlineCode, CodeBlock, Callout, Table, Section, Subsection, H4, BulletList, OrderedList, Grid2, Card } from './App'
+import { InlineCode, CodeBlock, Callout, Table, Section, Subsection, H4, BulletList, OrderedList, Grid2, Card } from '@/components'
 
 export const contentEN = (
   <>

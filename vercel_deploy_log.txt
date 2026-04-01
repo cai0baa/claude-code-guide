@@ -1,0 +1,52 @@
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: '@renovatebot/pep440@4.2.1',
+npm warn EBADENGINE   required: { node: '^20.9.0 || ^22.11.0 || ^24', pnpm: '^10.0.0' },
+npm warn EBADENGINE   current: { node: 'v25.8.2', npm: '11.12.0' }
+npm warn EBADENGINE }
+npm warn deprecated tar@7.5.7: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+Loading scopes…
+Searching for existing projects…
+> Auto-detected Project Settings for Vite
+
+Linked to cai0s-projects/claude-code-guide-shadcn (created .vercel and added it to .gitignore)
+Deploying cai0s-projects/claude-code-guide-shadcn
+Uploading [--------------------] (0.0B/765.4KB)
+Uploading [=====---------------] (205.1KB/765.4KB)
+Uploading [==========----------] (396.0KB/765.4KB)
+Uploading [===============-----] (576.3KB/765.4KB)
+Uploading [====================] (765.4KB/765.4KB)
+Inspect: https://vercel.com/cai0s-projects/claude-code-guide-shadcn/7fAXz6osVxABEQ6b71MZErg82Q5L [4s]
+Production: https://claude-code-guide-shadcn-dzi49vp1e-cai0s-projects.vercel.app [4s]
+https://claude-code-guide-shadcn-dzi49vp1e-cai0s-projects.vercel.appBuilding...
+Building...
+Building: Running build in Washington, D.C., USA (East) – iad1
+Building: Build machine configuration: 2 cores, 8 GB
+Building: Retrieving list of deployment files...
+Building: Previous build caches not available.
+Building: Downloading 42 deployment files...
+Building: Running "vercel build"
+Building: Vercel CLI 50.37.3
+Building: Installing dependencies...
+Building: added 217 packages in 5s
+Building: 39 packages are looking for funding
+Building: run `npm fund` for details
+Building: Running "npm run build"
+Building: > claude-code-guide@0.0.0 build
+Building: > vite build
+Building: vite v8.0.3 building client environment for production...
+Building: transforming...✓ 1816 modules transformed.
+Building: rendering chunks...
+Building: computing gzip size...
+Building: dist/index.html                   0.79 kB │ gzip:   0.43 kB
+Building: dist/assets/index-CmyVQViy.css   42.36 kB │ gzip:   7.42 kB
+Building: dist/assets/index-OuY_aEs6.js   455.75 kB │ gzip: 144.25 kB
+Building: ✓ built in 559ms
+Building: Build Completed in /vercel/output [6s]
+Building: Deploying outputs...
+[2K[1A[2K[GProduction: https://claude-code-guide-shadcn-dzi49vp1e-cai0s-projects.vercel.app [18s]
+Completing...
+Aliased: https://claude-code-guide-shadcn.vercel.app [18s]
+
+Common next commands:
+- `vercel inspect claude-code-guide-shadcn-dzi49vp1e-cai0s-projects.vercel.app --logs`
+- `vercel redeploy claude-code-guide-shadcn-dzi49vp1e-cai0s-projects.vercel.app`
