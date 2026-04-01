@@ -1,4 +1,4 @@
-import { InlineCode, CodeBlock, Callout, Table, Section, Subsection, H4, BulletList, OrderedList, Grid2, Card } from './App'
+import { InlineCode, CodeBlock, Callout, Table, Section, Subsection, H4, BulletList, OrderedList, Grid2, Card } from '@/components'
 
 export const contentPT = (
   <>
@@ -7,13 +7,13 @@ export const contentPT = (
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-accent-green via-accent-cyan to-accent-purple" />
       <h1 className="font-mono text-[28px] font-bold text-accent-green mb-3">Claude Code — Guia do Usuário Avançado</h1>
       <p className="text-[16px] text-text-secondary mb-5">
-        A comprehensive guide to mastering Claude Code, built from a complete source code analysis of the leaked codebase. Every feature, every flag, every hidden capability — documented and actionable.
+        Um guia completo para dominar o Claude Code, construído a partir de uma análise completa do código-fonte vazado. Cada recurso, cada flag, cada capacidade oculta — documentado e aplicável.
       </p>
       <div className="font-mono text-[12px] text-text-muted flex gap-5 flex-wrap">
-        <span><span className="text-accent-amber">Fonte:</span> Full codebase leak (785KB entry point)</span>
-        <span><span className="text-accent-amber">Análise:</span> 30 checkpoints, 24 deep dives</span>
-        <span><span className="text-accent-amber">Cobertura:</span> ~97% of all source files</span>
-        <span><span className="text-accent-amber">Data:</span> March 2026</span>
+        <span><span className="text-accent-amber">Fonte:</span> Vazamento completo do código-fonte (entry point de 785KB)</span>
+        <span><span className="text-accent-amber">Análise:</span> 30 checkpoints, 24 mergulhos profundos</span>
+        <span><span className="text-accent-amber">Cobertura:</span> ~97% de todos os arquivos fonte</span>
+        <span><span className="text-accent-amber">Data:</span> Março 2026</span>
       </div>
     </div>
 
@@ -21,69 +21,69 @@ export const contentPT = (
     <Section id="file-architecture" number="Part 01" title="Arquitetura de Arquivos" desc="Como o Claude Code descobre, lê e prioriza arquivos — estruture seu projeto para máxima eficácia da IA.">
       <Subsection title="O Sistema CLAUDE.md">
         <p className="text-text-secondary mb-3">
-          Claude Code walks up from the current directory to find <InlineCode>CLAUDE.md</InlineCode> files. Each file in the hierarchy is concatenated into the system prompt. This is your primary mechanism for project-specific instructions.
+          O Claude Code percorre os diretórios acima a partir do diretório atual para encontrar arquivos <InlineCode>CLAUDE.md</InlineCode>. Cada arquivo na hierarquia é concatenado no system prompt. Este é seu mecanismo principal para instruções específicas do projeto.
         </p>
         <Callout type="tip" title="tip">
-          Place <InlineCode>CLAUDE.md</InlineCode> at your repo root for global project rules, and in subdirectories for module-specific instructions. They stack hierarchically.
+          Coloque <InlineCode>CLAUDE.md</InlineCode> na raiz do repositório para regras globais do projeto, e em subdiretórios para instruções específicas de módulos. Eles se acumulam hierarquicamente.
         </Callout>
-        <CodeBlock lang="bash">{`# Recommended structure
+        <CodeBlock lang="bash">{`# Estrutura recomendada
 my-project/
-├── CLAUDE.md              # Global: architecture, conventions, tech stack
+├── CLAUDE.md              # Global: arquitetura, convenções, tech stack
 ├── src/
-│   ├── CLAUDE.md          # Module-specific: API patterns, error handling
+│   ├── CLAUDE.md          # Específico do módulo: padrões de API, tratamento de erros
 │   └── api/
-│       └── CLAUDE.md      # Deep-specific: endpoint conventions
+│       └── CLAUDE.md      # Específico profundo: convenções de endpoints
 └── tests/
-    └── CLAUDE.md          # Testing: frameworks, patterns, coverage rules`}</CodeBlock>
+    └── CLAUDE.md          # Testes: frameworks, padrões, regras de cobertura`}</CodeBlock>
         <H4>O que Colocar no CLAUDE.md</H4>
         <BulletList items={[
-          <><strong>Architecture overview</strong> — How the codebase is organized, key patterns</>,
-          <><strong>Conventions</strong> — Naming, file structure, import order, error handling</>,
-          <><strong>Tech stack</strong> — Frameworks, libraries, versions, why they were chosen</>,
-          <><strong>Anti-patterns</strong> — What NOT to do, common mistakes to avoid</>,
-          <><strong>Testing strategy</strong> — What to test, how, which framework</>,
-          <><strong>Deployment</strong> — Build commands, environment variables, CI/CD</>,
+          <><strong>Visão geral da arquitetura</strong> — Como o codebase é organizado, padrões-chave</>,
+          <><strong>Convenções</strong> — Nomenclatura, estrutura de arquivos, ordem de imports, tratamento de erros</>,
+          <><strong>Tech stack</strong> — Frameworks, bibliotecas, versões, por que foram escolhidos</>,
+          <><strong>Anti-padrões</strong> — O que NÃO fazer, erros comuns a evitar</>,
+          <><strong>Estratégia de testes</strong> — O que testar, como, qual framework</>,
+          <><strong>Deploy</strong> — Comandos de build, variáveis de ambiente, CI/CD</>,
         ]} />
         <Callout type="warning" title="claudeMdWarning">
-          CLAUDE.md content is cached for the auto-mode classifier. Changes during a session may not be immediately reflected in classifier decisions.
+          O conteúdo do CLAUDE.md é cacheado para o classificador de modo automático. Mudanças durante uma sessão podem não ser refletidas imediatamente nas decisões do classificador.
         </Callout>
       </Subsection>
 
       <Subsection title="O Diretório .claude/">
         <p className="text-text-secondary mb-3">Este é o diretório de dados local do projeto do Claude Code. Armazena configurações, memórias, skills, tarefas e mais.</p>
         <CodeBlock lang="bash">{`.claude/
-├── settings.json           # Project settings (permissions, model, etc.)
-├── settings.local.json     # Local overrides (gitignored, personal prefs)
-├── skills/                 # Project-specific skills
+├── settings.json           # Configurações do projeto (permissões, modelo, etc.)
+├── settings.local.json     # Overrides locais (gitignored, prefs pessoais)
+├── skills/                 # Skills específicas do projeto
 │   └── my-skill/
-│       ├── SKILL.md        # Skill definition with frontmatter
-│       └── scripts/        # Skill scripts
-├── commands/               # Custom slash commands
-├── tasks/                  # Background task state
-├── memory/                 # Session memory files
-│   └── MEMORY.md           # Consolidated project memory
-├── team-memory/            # Team memory sync files
-└── plugins/                # Installed plugins`}</CodeBlock>
+│       ├── SKILL.md        # Definição da skill com frontmatter
+│       └── scripts/        # Scripts da skill
+├── commands/               # Comandos slash customizados
+├── tasks/                  # Estado das tarefas em background
+├── memory/                 # Arquivos de memória da sessão
+│   └── MEMORY.md           # Memória consolidada do projeto
+├── team-memory/            # Arquivos de sync de memória em equipe
+└── plugins/                # Plugins instalados`}</CodeBlock>
         <Callout type="tip" title="tip">
-          Commit <InlineCode>.claude/settings.json</InlineCode> to share permissions and config with your team. Use <InlineCode>.claude/settings.local.json</InlineCode> for personal preferences (add to .gitignore).
+          Faça commit do <InlineCode>.claude/settings.json</InlineCode> para compartilhar permissões e config com sua equipe. Use <InlineCode>.claude/settings.local.json</InlineCode> para preferências pessoais (adicione ao .gitignore).
         </Callout>
       </Subsection>
 
       <Subsection title="Prioridade de Merge de Configurações">
-        <p className="text-text-secondary mb-3">Claude Code merges settings from 6 sources (lowest → highest priority):</p>
+        <p className="text-text-secondary mb-3">O Claude Code mescla configurações de 6 fontes (menor → maior prioridade):</p>
         <Table
-          headers={['Priority', 'Source', 'File', 'Scope']}
+          headers={['Prioridade', 'Fonte', 'Arquivo', 'Escopo']}
           rows={[
-            ['1 (lowest)', 'Plugin settings', '—', 'Allowlisted keys only'],
-            ['2', 'User settings', <InlineCode>~/.claude/settings.json</InlineCode>, 'All projects'],
-            ['3', 'Project settings', <InlineCode>.claude/settings.json</InlineCode>, 'This project'],
-            ['4', 'Local settings', <InlineCode>.claude/settings.local.json</InlineCode>, 'This machine'],
-            ['5', 'Policy settings', 'Managed/MDM', 'Enterprise policy'],
-            ['6 (highest)', 'Flag settings', 'CLI flags + SDK', 'Current session'],
+            ['1 (menor)', 'Config de plugins', '—', 'Apenas chaves permitidas'],
+            ['2', 'Config do usuário', <InlineCode>~/.claude/settings.json</InlineCode>, 'Todos os projetos'],
+            ['3', 'Config do projeto', <InlineCode>.claude/settings.json</InlineCode>, 'Este projeto'],
+            ['4', 'Config local', <InlineCode>.claude/settings.local.json</InlineCode>, 'Esta máquina'],
+            ['5', 'Config de política', 'Managed/MDM', 'Política corporativa'],
+            ['6 (maior)', 'Config de flags', 'CLI flags + SDK', 'Sessão atual'],
           ]}
         />
         <Callout type="danger" title="settingsDanger">
-          Project settings are <strong>excluded</strong> from auto-mode opt-in and dangerous mode bypass checks. This prevents malicious projects from auto-bypassing security dialogs.
+          Configurações do projeto são <strong>excluídas</strong> de verificações de opt-in de modo automático e bypass de modo perigoso. Isso impede que projetos maliciosos burlem diálogos de segurança automaticamente.
         </Callout>
       </Subsection>
 
@@ -98,7 +98,7 @@ my-project/
   "permissions": { "mode": "acceptEdits" }
 }`}</CodeBlock>
         <Callout type="info" title="globalInfo">
-          The global config uses <InlineCode>proper-lockfile</InlineCode> to prevent concurrent writes. It also maintains timestamped backups (max 5, 60s minimum interval) in <InlineCode>~/.claude/backups/</InlineCode>.
+          A config global usa <InlineCode>proper-lockfile</InlineCode> para prevenir escritas concorrentes. Também mantém backups com timestamp (máx 5, intervalo mínimo de 60s) em <InlineCode>~/.claude/backups/</InlineCode>.
         </Callout>
       </Subsection>
     </Section>
@@ -106,13 +106,13 @@ my-project/
     {/* Part 2 */}
     <Section id="memory-systems" number="Part 02" title="Sistemas de Memória" desc="O Claude Code tem múltiplas camadas de memória — aprenda como funcionam e como estruturá-las para máximo recall da IA.">
       <Subsection title="Memória de Sessão (Auto-Extraída)">
-        <p className="text-text-secondary mb-3">Session memory runs as a <strong>forked subagent</strong> via a post-sampling hook. It extracts key information from conversations and writes to a markdown memory file.</p>
+        <p className="text-text-secondary mb-3">A memória de sessão roda como um <strong>subagente bifurcado</strong> via hook pós-sampling. Extrai informações-chave das conversas e escreve em um arquivo de memória markdown.</p>
         <H4>Como Dispara</H4>
         <BulletList items={[
-          <><strong>Token threshold</strong> + <strong>tool call threshold</strong> — both must be met</>,
-          'OR <strong>token threshold</strong> + <strong>no tool calls</strong> in last turn',
-          'Configurable via GrowthBook: <InlineCode>tengu_sm_config</InlineCode>',
-          'Only runs when <strong>auto-compact is enabled</strong>',
+          <><strong>Limite de tokens</strong> + <strong>limite de tool calls</strong> — ambos devem ser atingidos</>,
+          'OU <strong>limite de tokens</strong> + <strong>sem tool calls</strong> no último turno',
+          'Configurável via GrowthBook: <InlineCode>tengu_sm_config</InlineCode>',
+          'Só roda quando <strong>auto-compact está habilitado</strong>',
         ]} />
         <H4>Formato do Arquivo de Memória</H4>
         <CodeBlock lang="markdown">{`# Project Memory
@@ -130,54 +130,54 @@ my-project/
 - Prefers functional programming patterns
 - Wants explicit error handling, no silent failures`}</CodeBlock>
         <Callout type="tip" title="tip">
-          You can manually trigger memory extraction with <InlineCode>/summary</InlineCode> — this bypasses all thresholds and forces the memory subagent to run immediately.
+          Você pode disparar extração de memória manualmente com <InlineCode>/summary</InlineCode> — isso ignora todos os limites e força o subagente de memória a rodar imediatamente.
         </Callout>
       </Subsection>
 
       <Subsection title="Logs Diários (KAIROS)">
-        <p className="text-text-secondary mb-3">In always-on mode (KAIROS), Claude Code maintains <strong>append-only daily logs</strong>:</p>
+        <p className="text-text-secondary mb-3">No modo always-on (KAIROS), o Claude Code mantém <strong>logs diários append-only</strong>:</p>
         <CodeBlock lang="bash">{`~/.claude/projects/<git-root>/memory/logs/
 └── 2026/
     └── 03/
         └── 2026-03-31.md    # Append-only daily log`}</CodeBlock>
-        <p className="text-text-secondary mb-3">Each night, a <InlineCode>/dream</InlineCode> skill distills these logs into <InlineCode>MEMORY.md</InlineCode> + topic-specific files.</p>
+        <p className="text-text-secondary mb-3">Cada noite, uma skill <InlineCode>/dream</InlineCode> destila esses logs em <InlineCode>MEMORY.md</InlineCode> + arquivos por tópico.</p>
         <Callout type="warning" title="dailyWarning">
-          Daily logs are append-only. The AI appends to them throughout the day. Don't manually edit these — let the AI manage them.
+          Logs diários são append-only. A IA adiciona a eles ao longo do dia. Não edite manualmente — deixe a IA gerenciar.
         </Callout>
       </Subsection>
 
       <Subsection title="Sync de Memória em Equipe">
-        <p className="text-text-secondary mb-3">Team memory sync shares knowledge across team members via a centralized API:</p>
+        <p className="text-text-secondary mb-3">O sync de memória em equipe compartilha conhecimento entre membros via API centralizada:</p>
         <BulletList items={[
           <><strong>API</strong>: <InlineCode>GET/PUT /api/claude_code/team_memory?repo={'{owner/repo}'}</InlineCode></>,
-          <><strong>Delta upload</strong>: Only changed keys are uploaded (200KB max per PUT)</>,
-          <><strong>ETag locking</strong>: Optimistic concurrency with If-Match header</>,
-          <><strong>Secret scanning</strong>: Files with detected secrets (gitleaks) are SKIPPED</>,
-          <><strong>Size limits</strong>: 250KB per file, server-enforced max entries</>,
-          <><strong>File watcher</strong>: Triggers push on local edits with debounce</>,
+          <><strong>Upload delta</strong>: Apenas chaves alteradas são enviadas (máx 200KB por PUT)</>,
+          <><strong>Locking ETag</strong>: Concorrência otimista com header If-Match</>,
+          <><strong>Scan de segredos</strong>: Arquivos com segredos detectados (gitleaks) são IGNORADOS</>,
+          <><strong>Limites de tamanho</strong>: 250KB por arquivo, máx de entradas forçado pelo servidor</>,
+          <><strong>File watcher</strong>: Dispara push em edições locais com debounce</>,
         ]} />
         <Callout type="tip" title="tip">
-          Create team memory files that document: architecture decisions, coding conventions, common pitfalls, and onboarding steps. These sync across all team members automatically.
+          Crie arquivos de memória de equipe que documentem: decisões de arquitetura, convenções de código, armadilhas comuns e passos de onboarding. Eles sincronizam automaticamente entre todos os membros.
         </Callout>
       </Subsection>
 
       <Subsection title="Sistema Dream (Auto Dream)">
-        <p className="text-text-secondary mb-3">The Dream system is a <strong>background memory consolidation</strong> process that runs when you're not actively using Claude Code:</p>
+        <p className="text-text-secondary mb-3">O sistema Dream é um processo de <strong>consolidação de memória em background</strong> que roda quando você não está usando ativamente o Claude Code:</p>
         <H4>Trigger de Três Portas</H4>
         <OrderedList items={[
-          <><strong>Time gate</strong>: 24 hours since last dream (configurable via <InlineCode>tengu_onyx_plover</InlineCode>)</>,
-          <><strong>Session gate</strong>: 5 sessions since last dream</>,
-          <><strong>Lock gate</strong>: PID-based lock file (60min stale timeout)</>,
+          <><strong>Gate de tempo</strong>: 24 horas desde o último dream (configurável via <InlineCode>tengu_onyx_plover</InlineCode>)</>,
+          <><strong>Gate de sessão</strong>: 5 sessões desde o último dream</>,
+          <><strong>Gate de lock</strong>: Lock file baseado em PID (timeout de 60min)</>,
         ]} />
         <H4>Quatro Fases</H4>
-        <OrderedList items={['Orient: Review current memory state', 'Gather: Collect recent session transcripts', 'Consolidate: Merge and deduplicate memories', 'Prune: Remove outdated or redundant information']} />
+        <OrderedList items={['Orientar: Revisar estado atual da memória', 'Coletar: Reunir transcrições de sessões recentes', 'Consolidar: Mesclar e deduplicar memórias', 'Podar: Remover informações desatualizadas ou redundantes']} />
         <Callout type="info" title="dreamDisabled">
-          Dream is disabled when KAIROS is active (KAIROS uses its own disk-skill dream), or in remote mode.
+          Dream é desabilitado quando KAIROS está ativo (KAIROS usa sua própria disk-skill dream), ou em modo remoto.
         </Callout>
       </Subsection>
 
       <Subsection title="Como Estruturar Seus Arquivos de Memória">
-        <p className="text-text-secondary mb-3">For maximum AI effectiveness, structure your memory files like this:</p>
+        <p className="text-text-secondary mb-3">Para máxima eficácia da IA, estruture seus arquivos de memória assim:</p>
         <CodeBlock lang="markdown">{`# MEMORY.md — Project Memory
 
 ## Project Overview
@@ -217,7 +217,7 @@ Brief description, purpose, target users
     {/* Part 3 */}
     <Section id="skills" number="Part 03" title="Skills" desc="Skills são fluxos de trabalho reutilizáveis que o Claude Code pode descobrir e executar. Aprenda a escrever skills que realmente funcionam.">
       <Subsection title="Arquitetura de Skills">
-        <p className="text-text-secondary mb-3">Skills have a rich frontmatter schema with 15+ configuration fields. They can run in three modes: inline, forked (sub-agent), or remote.</p>
+        <p className="text-text-secondary mb-3">Skills têm um schema de frontmatter rico com 15+ campos de configuração. Podem rodar em três modos: inline, bifurcado (sub-agente) ou remoto.</p>
         <H4>6 Fontes de Skills</H4>
         <Table
           headers={['Source', 'Location', 'Priority']}
@@ -233,7 +233,7 @@ Brief description, purpose, target users
       </Subsection>
 
       <Subsection title="Escrevendo uma Skill">
-        <p className="text-text-secondary mb-3">Every skill is a directory with a <InlineCode>SKILL.md</InlineCode> file containing YAML frontmatter:</p>
+        <p className="text-text-secondary mb-3">Toda skill é um diretório com um arquivo <InlineCode>SKILL.md</InlineCode> contendo frontmatter YAML:</p>
         <CodeBlock lang="markdown">{`---
 name: deploy
 description: Deploy the application to production
@@ -263,7 +263,7 @@ This skill handles the complete deployment pipeline:
       </Subsection>
 
       <Subsection title="Skills Empacotadas (17 Total)">
-        <p className="text-text-secondary mb-3">Claude Code ships with 17 built-in skills. Study these as templates:</p>
+        <p className="text-text-secondary mb-3">O Claude Code vem com 17 skills built-in. Estude-as como templates:</p>
         <Table
           headers={['Skill', 'Purpose', 'Notes']}
           rows={[
@@ -285,16 +285,16 @@ This skill handles the complete deployment pipeline:
           <><strong>Path traversal prevention</strong> — skills can't escape their directory</>,
         ]} />
         <Callout type="tip" title="forkTip">
-          Use <InlineCode>context: fork</InlineCode> for complex skills that need their own sub-agent. This isolates the skill's context from the main conversation and gives it its own tool permissions.
+          Use <InlineCode>context: fork</InlineCode> para skills complexas que precisam de seu próprio sub-agente. Isso isola o contexto da skill da conversa principal e dá suas próprias permissões de tools.
         </Callout>
       </Subsection>
 
       <Subsection title="Descoberta de Skills">
-        <p className="text-text-secondary mb-3">Claude Code dynamically discovers skills by walking up from file operations to find <InlineCode>.claude/skills/</InlineCode> directories. It's gitignore-aware and respects path boundaries.</p>
+        <p className="text-text-secondary mb-3">O Claude Code descobre skills dinamicamente percorrendo os diretórios acima a partir de operações de arquivo para encontrar diretórios <InlineCode>.claude/skills/</InlineCode>. Respeita o gitignore e limites de caminhos.</p>
         <H4>EXPERIMENTAL_SKILL_SEARCH (Ant-Only)</H4>
-        <p className="text-text-secondary mb-3">Remote skill system with cloud fetching (GCS/S3/HTTP), local caching, and canonical skill auto-grant. Not available in external builds.</p>
+        <p className="text-text-secondary mb-3">Sistema remoto de skills com busca em nuvem (GCS/S3/HTTP), cache local e auto-grant de skills canônicas. Não disponível em builds externos.</p>
         <H4>MCP_SKILLS</H4>
-        <p className="text-text-secondary">Discovers skills from <><InlineCode>skill://</InlineCode> resources</> on MCP servers. Merged with commands on connection. This is how MCP servers can expose reusable workflows.</p>
+        <p className="text-text-secondary">Descobre skills a partir de <><InlineCode>skill://</InlineCode> resources</> em servidores MCP. Mescladas com comandos na conexão. É assim que servidores MCP podem expor workflows reutilizáveis.</p>
       </Subsection>
     </Section>
 
@@ -332,7 +332,7 @@ This skill handles the complete deployment pipeline:
       </Subsection>
 
       <Subsection title="Configuração de Hooks">
-        <p className="text-text-secondary mb-3">Hooks are configured in settings with an <InlineCode>if</InlineCode> condition using permission rule syntax:</p>
+        <p className="text-text-secondary mb-3">Hooks são configurados nas settings com uma condição <InlineCode>if</InlineCode> usando sintaxe de regras de permissão:</p>
         <CodeBlock lang="json">{`{
   "hooks": [
     {
@@ -358,7 +358,7 @@ This skill handles the complete deployment pipeline:
   ]
 }`}</CodeBlock>
         <Callout type="tip" title="hookTip">
-          Use <InlineCode>PreToolUse</InlineCode> hooks with <InlineCode>Bash(*)</InlineCode> to log all shell commands, or <InlineCode>PostToolUse</InlineCode> with <InlineCode>FileEdit(*)</InlineCode> to auto-run linters after edits.
+          Use hooks <InlineCode>PreToolUse</InlineCode> com <InlineCode>Bash(*)</InlineCode> para logar todos os comandos shell, ou <InlineCode>PostToolUse</InlineCode> com <InlineCode>FileEdit(*)</InlineCode> para rodar linters automaticamente após edições.
         </Callout>
       </Subsection>
 
@@ -377,7 +377,7 @@ FileWrite(src/*.tsx)
 # Match agent spawning
 Agent(*)`}</CodeBlock>
         <Callout type="warning" title="hookWarning">
-          HTTP hooks require an <InlineCode>allowedEnvVars</InlineCode> allowlist for header interpolation. This prevents SSRF attacks and credential leakage.
+          Hooks HTTP requerem uma allowlist <InlineCode>allowedEnvVars</InlineCode> para interpolação de headers. Isso previne ataques SSRF e vazamento de credenciais.
         </Callout>
       </Subsection>
     </Section>
@@ -399,7 +399,7 @@ Agent(*)`}</CodeBlock>
       </Subsection>
 
       <Subsection title="Modo Automático (Classificador YOLO)">
-        <p className="text-text-secondary mb-3">Auto mode uses a <strong>2-stage XML classifier</strong> to decide whether to allow or deny tool use:</p>
+        <p className="text-text-secondary mb-3">O modo auto usa um <strong>classificador XML de 2 estágios</strong> para decidir se permite ou nega o uso de tools:</p>
         <H4>Estágio 1 — Caminho Rápido</H4>
         <BulletList items={[
           <><InlineCode>max_tokens=64</InlineCode>, <InlineCode>stop_sequences=['&lt;/block&gt;']</InlineCode></>,
@@ -413,7 +413,7 @@ Agent(*)`}</CodeBlock>
           'Controlled by <InlineCode>tengu_auto_mode_config.twoStageClassifier</InlineCode>',
         ]} />
         <Callout type="tip" title="autoTip">
-          Auto mode has two fast paths BEFORE the classifier: (1) acceptEdits check — if action is allowed in acceptEdits mode, auto-allow. (2) Safe tool allowlist — read-only tools skip classifier entirely.
+          O modo auto tem dois caminhos rápidos ANTES do classificador: (1) check acceptEdits — se ação é permitida no modo acceptEdits, auto-allow. (2) Allowlist de tools seguras — tools read-only pulam o classificador completamente.
         </Callout>
       </Subsection>
 
@@ -457,7 +457,7 @@ ask Bash(*)`}</CodeBlock>
       </Subsection>
 
       <Subsection title="Segurança de Caminhos">
-        <p className="text-text-secondary mb-3">Claude Code's path validation is extremely thorough:</p>
+        <p className="text-text-secondary mb-3">A validação de caminhos do Claude Code é extremamente rigorosa:</p>
         <BulletList items={[
           <><strong>UNC paths</strong> — Blocked (credential leakage, WebDAV attacks)</>,
           <><strong>Shell expansion</strong> — <InlineCode>$</InlineCode>, <InlineCode>%</InlineCode>, <InlineCode>=</InlineCode> in paths blocked</>,
@@ -468,7 +468,7 @@ ask Bash(*)`}</CodeBlock>
           <><strong>Case-insensitive</strong> — Prevents <InlineCode>.cLauDe/Settings.locaL.json</InlineCode> bypasses</>,
         ]} />
         <Callout type="info" title="pathInfo">
-          Even in <InlineCode>bypassPermissions</InlineCode> mode, safety checks for <InlineCode>.git/</InlineCode>, <InlineCode>.claude/</InlineCode>, <InlineCode>.vscode/</InlineCode>, and shell configs still require prompts.
+          Mesmo no modo <InlineCode>bypassPermissions</InlineCode>, checks de segurança para <InlineCode>.git/</InlineCode>, <InlineCode>.claude/</InlineCode>, <InlineCode>.vscode/</InlineCode> e configs de shell ainda exigem prompts.
         </Callout>
       </Subsection>
 
@@ -499,7 +499,7 @@ ask Bash(*)`}</CodeBlock>
     {/* Part 6 */}
     <Section id="multi-agent" number="Part 06" title="Orquestração Multi-Agent" desc="O Claude Code suporta três tiers de operação multi-agent — aprenda quando e como usar cada um.">
       <Subsection title="Tier 1: Sub-Agentes (Agent Tool)">
-        <p className="text-text-secondary mb-3">The simplest multi-agent pattern. Spawn a sub-agent with a specific task:</p>
+        <p className="text-text-secondary mb-3">O padrão multi-agent mais simples. Spawn de um sub-agente com uma tarefa específica:</p>
         <CodeBlock lang="markdown">{`Use the Agent tool to delegate:
 
 "I need you to research the API patterns used in this codebase.
@@ -527,12 +527,12 @@ Search through all API route files and document:
           ]}
         />
         <Callout type="tip" title="agentTip">
-          MCP tools bypass all filtering — any tool starting with <InlineCode>mcp__</InlineCode> passes through unconditionally to sub-agents.
+          Tools MCP ignoram todo o filtering — qualquer tool começando com <InlineCode>mcp__</InlineCode> passa incondicionalmente para sub-agentes.
         </Callout>
       </Subsection>
 
       <Subsection title="Tier 2: Agent Swarms">
-        <p className="text-text-secondary mb-3">Agent swarms create multiple teammate agents that work in parallel:</p>
+        <p className="text-text-secondary mb-3">Agent swarms criam múltiplos agentes companheiros que trabalham em paralelo:</p>
         <CodeBlock lang="bash">{`# Environment variable
 export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
 
@@ -553,7 +553,7 @@ claude --agent-teams`}</CodeBlock>
           'Auto-resume: SendMessage to stopped agent resumes from disk transcript',
         ]} />
         <Callout type="warning" title="swarmWarning">
-          Agent swarms are gated by <InlineCode>tengu_amber_flint</InlineCode> for external users. Always on for Anthropic internal builds.
+          Agent swarms são gated por <InlineCode>tengu_amber_flint</InlineCode> para usuários externos. Sempre on para builds internos da Anthropic.
         </Callout>
       </Subsection>
 
@@ -566,9 +566,9 @@ claude --agent-teams`}</CodeBlock>
           <><strong>Implementation</strong> — Workers implement the plan</>,
           <><strong>Verification</strong> — Workers verify the implementation</>,
         ]} />
-        <p className="text-text-secondary mb-3">The coordinator's instruction: <strong>"Parallelism is your superpower"</strong>. Workers communicate via <InlineCode>&lt;task-notification&gt;</InlineCode> XML messages and share a scratchpad directory.</p>
+        <p className="text-text-secondary mb-3">A instrução do coordenador: <strong>"Paralelismo é seu superpoder"</strong>. Workers comunicam via tags XML <InlineCode>&lt;task-notification&gt;</InlineCode> e compartilham um diretório scratchpad.</p>
         <Callout type="tip" title="coordTip">
-          Use the scratchpad directory (<InlineCode>tengu_scratch</InlineCode>) for cross-worker knowledge sharing. Workers can read what other workers have written.
+          Use o diretório scratchpad (<InlineCode>tengu_scratch</InlineCode>) para compartilhamento de conhecimento cross-worker. Workers podem ler o que outros workers escreveram.
         </Callout>
       </Subsection>
 
@@ -594,7 +594,7 @@ claude --agent-teams`}</CodeBlock>
     {/* Part 7 */}
     <Section id="context-optimization" number="Part 07" title="Otimização de Contexto" desc="Entenda como o Claude Code gerencia janelas de contexto, compactação e caching de prompts para manter sessões eficientes.">
       <Subsection title="Como Funciona a Compactação">
-        <p className="text-text-secondary mb-3">When context gets too large, Claude Code compacts it using a forked agent:</p>
+        <p className="text-text-secondary mb-3">Quando o contexto fica muito grande, o Claude Code o compacta usando um agente bifurcado:</p>
         <H4>Compactação Completa</H4>
         <BulletList items={[
           'Summarizes all messages, preserves recent context',
@@ -607,13 +607,13 @@ claude --agent-teams`}</CodeBlock>
           <><strong>up_to mode</strong> — Summarize before pivot</>,
         ]} />
         <H4>Micro-Compact</H4>
-        <p className="text-text-secondary">Lightweight compaction variant for smaller context reductions. Uses cached micro-compact when <InlineCode>CACHED_MICROCOMPACT</InlineCode> feature is enabled.</p>
+        <p className="text-text-secondary">Variante leve de compactação para reduções menores de contexto. Usa micro-compact cacheado quando a feature <InlineCode>CACHED_MICROCOMPACT</InlineCode> está habilitada.</p>
       </Subsection>
 
       <Subsection title="Compartilhamento de Cache de Prompt">
-        <p className="text-text-secondary mb-3">During compaction, the forked agent <strong>reuses the main conversation's cached prefix</strong>. This is enabled by default via <InlineCode>tengu_compact_cache_prefix</InlineCode>.</p>
+        <p className="text-text-secondary mb-3">Durante a compactação, o agente bifurcado <strong>reutiliza o prefixo cacheado da conversa principal</strong>. Habilitado por padrão via <InlineCode>tengu_compact_cache_prefix</InlineCode>.</p>
         <Callout type="tip" title="cacheTip">
-          To maximize cache hits, keep the beginning of your conversation stable. Avoid editing early messages or changing system prompts mid-session.
+          Para maximizar hits de cache, mantenha o início da sua conversa estável. Evite editar mensagens iniciais ou mudar system prompts no meio da sessão.
         </Callout>
         <H4>O que Quebra o Cache</H4>
         <BulletList items={[
@@ -623,11 +623,11 @@ claude --agent-teams`}</CodeBlock>
           'Model changes',
         ]} />
         <H4>Detecção de Quebra de Cache</H4>
-        <p className="text-text-secondary">When <InlineCode>PROMPT_CACHE_BREAK_DETECTION</InlineCode> is enabled, Claude Code detects when the cache is busted and can take corrective action.</p>
+        <p className="text-text-secondary">Quando <InlineCode>PROMPT_CACHE_BREAK_DETECTION</InlineCode> está habilitado, o Claude Code detecta quando o cache é quebrado e pode tomar ações corretivas.</p>
       </Subsection>
 
       <Subsection title="Sistema de Budget de Tool Results">
-        <p className="text-text-secondary mb-3">Per-message aggregate budget of <strong>200K chars</strong> (overridable via <InlineCode>tengu_hawthorn_window</InlineCode>):</p>
+        <p className="text-text-secondary mb-3">Budget agregado por mensagem de <strong>200K chars</strong> (override via <InlineCode>tengu_hawthorn_window</InlineCode>):</p>
         <Table
           headers={['Constant', 'Value', 'Description']}
           rows={[
@@ -649,7 +649,7 @@ claude --agent-teams`}</CodeBlock>
       </Subsection>
 
       <Subsection title="Janela de Contexto de 1M">
-        <p className="text-text-secondary mb-3">Available via <InlineCode>context-1m-2025-08-07</InlineCode> beta header:</p>
+        <p className="text-text-secondary mb-3">Disponível via header beta <InlineCode>context-1m-2025-08-07</InlineCode>:</p>
         <BulletList items={[
           'Gated by <InlineCode>has1mContext()</InlineCode>',
           'Extra usage required — API returns 429 with "Extra usage is required for long context"',
@@ -661,7 +661,7 @@ claude --agent-teams`}</CodeBlock>
     {/* Part 8 */}
     <Section id="mcp-plugins" number="Part 08" title="MCP & Plugins" desc="Estenda o Claude Code com servidores MCP e plugins — o ecossistema para tools e capacidades customizadas.">
       <Subsection title="Configuração de Servidor MCP">
-        <p className="text-text-secondary mb-3">MCP servers are configured in <InlineCode>.mcp.json</InlineCode> (project) or <InlineCode>~/.claude.json</InlineCode> (user):</p>
+        <p className="text-text-secondary mb-3">Servidores MCP são configurados em <InlineCode>.mcp.json</InlineCode> (projeto) ou <InlineCode>~/.claude.json</InlineCode> (usuário):</p>
         <CodeBlock lang="json">{`{
   "mcpServers": {
     "github": {
@@ -692,10 +692,10 @@ claude --agent-teams`}</CodeBlock>
       </Subsection>
 
       <Subsection title="Precedência de Servidores MCP">
-        <p className="text-text-secondary mb-3">7 config scopes merge in this order (lowest → highest):</p>
+        <p className="text-text-secondary mb-3">7 escopos de config mesclam nesta ordem (menor → maior):</p>
         <OrderedList items={['Plugin', 'User', 'Project', 'Local', 'Enterprise (exclusive — blocks all user/project/local when set)', 'Claude.ai (org-managed)', 'Managed (MDM/policy)']} />
         <Callout type="tip" title="mcpTip">
-          In-process servers (Chrome MCP, Computer Use) run in-process via <InlineCode>InProcessTransport</InlineCode> to avoid ~325MB subprocess overhead.
+          Servidores in-process (Chrome MCP, Computer Use) rodam in-process via <InlineCode>InProcessTransport</InlineCode> para evitar overhead de subprocess de ~325MB.
         </Callout>
       </Subsection>
 
@@ -705,19 +705,19 @@ claude --agent-teams`}</CodeBlock>
         <H4>Fluxo de Update (Non-Inplace)</H4>
         <OrderedList items={['Download to temp directory', 'Calculate version (git SHA or marketplace metadata)', 'Copy to new versioned cache path', 'Update disk references', 'Orphan old versions when no longer referenced']} />
         <Callout type="warning" title="pluginWarning">
-          <InlineCode>isPluginBlockedByPolicy()</InlineCode> checks org policy before install/enable. Enterprise admins can block specific plugins.
+          <InlineCode>isPluginBlockedByPolicy()</InlineCode> checa política da org antes de install/enable. Admins corporativos podem bloquear plugins específicos.
         </Callout>
       </Subsection>
 
       <Subsection title="Dedup de Plugin MCP">
-        <p className="text-text-secondary">Plugin MCP servers are deduplicated against manual servers via <strong>content-based signatures</strong> (command array or URL). This prevents duplicate connections when both a plugin and manual config define the same server.</p>
+        <p className="text-text-secondary">Servidores MCP de plugins são deduplicados contra servidores manuais via <strong>assinaturas baseadas em conteúdo</strong> (array de comandos ou URL). Isso previne conexões duplicadas quando tanto um plugin quanto config manual definem o mesmo servidor.</p>
       </Subsection>
     </Section>
 
     {/* Part 9 */}
     <Section id="remote-workflows" number="Part 09" title="Fluxos Remotos" desc="O Claude Code suporta três modos remotos — aprenda a mover sessões entre local e cloud.">
       <Subsection title="Teleport (Transferência de Sessão)">
-        <p className="text-text-secondary mb-3">Teleport moves a session from local to remote (CCR):</p>
+        <p className="text-text-secondary mb-3">Teleport move uma sessão do local para remoto (CCR):</p>
         <H4>Dois Modos de Origem</H4>
         <OrderedList items={[
           <><strong>GitHub clone</strong> (preflight-checked) — 43% of repos</>,
@@ -725,7 +725,7 @@ claude --agent-teams`}</CodeBlock>
           '<strong>Empty sandbox</strong> — last resort',
         ]} />
         <Callout type="tip" title="teleportTip">
-          Use <InlineCode>CCR_FORCE_BUNDLE=1</InlineCode> to skip GitHub preflight and always use git bundles.
+          Use <InlineCode>CCR_FORCE_BUNDLE=1</InlineCode> para pular pré-check do GitHub e sempre usar git bundles.
         </Callout>
       </Subsection>
 
@@ -856,7 +856,7 @@ claude ssh localhost --local`}</CodeBlock>
       </Subsection>
 
       <Subsection title="Feature Flags do GrowthBook">
-        <p className="text-text-secondary mb-3">You can override GrowthBook flags in <InlineCode>~/.claude.json</InlineCode>:</p>
+        <p className="text-text-secondary mb-3">Você pode sobrescrever flags do GrowthBook em <InlineCode>~/.claude.json</InlineCode>:</p>
         <CodeBlock lang="json">{`{
   "growthBookOverrides": {
     "tengu_auto_mode_config": {
@@ -870,7 +870,7 @@ claude ssh localhost --local`}</CodeBlock>
   }
 }`}</CodeBlock>
         <Callout type="warning" title="gbWarning">
-          GrowthBook overrides via <InlineCode>CLAUDE_INTERNAL_FC_OVERRIDES</InlineCode> env var are only available in Anthropic internal builds.
+          Overrides do GrowthBook via variável de ambiente <InlineCode>CLAUDE_INTERNAL_FC_OVERRIDES</InlineCode> estão disponíveis apenas em builds internos da Anthropic.
         </Callout>
       </Subsection>
 
@@ -889,7 +889,7 @@ claude ssh localhost --local`}</CodeBlock>
       </Subsection>
 
       <Subsection title="Modo Rápido (Penguin Mode)">
-        <p className="text-text-secondary mb-3">Opus 4.6 at 6× pricing ($30/$150 vs $5/$25 per Mtok):</p>
+        <p className="text-text-secondary mb-3">Opus 4.6 a preço 6× ($30/$150 vs $5/$25 por Mtok):</p>
         <BulletList items={[
           'Org-gated: disabled for free, preference, extra_usage_disabled',
           'Kill switches: <InlineCode>tengu_penguins_off</InlineCode>, <InlineCode>tengu_marble_sandcastle</InlineCode> (requires native binary)',
@@ -899,7 +899,7 @@ claude ssh localhost --local`}</CodeBlock>
       </Subsection>
 
       <Subsection title="Modo Undercover">
-        <p className="text-text-secondary mb-3">Prevents internal info leaks in public repos:</p>
+        <p className="text-text-secondary mb-3">Previne vazamentos de informações internas em repos públicos:</p>
         <BulletList items={[
           <><strong>NO force-OFF</strong> — always ON unless repo is on 22-repo internal allowlist</>,
           'Strips: model names/IDs, frontier model name, Claude Code availability, fast mode details',
@@ -909,7 +909,7 @@ claude ssh localhost --local`}</CodeBlock>
       </Subsection>
 
       <Subsection title="Modo Daemon">
-        <p className="text-text-secondary mb-3">Run Claude sessions in the background like system services — like <InlineCode>docker ps</InlineCode> for your AI agents.</p>
+        <p className="text-text-secondary mb-3">Rode sessões do Claude em background como serviços de sistema — como <InlineCode>docker ps</InlineCode> para seus agentes IA.</p>
         <BulletList items={[
           <><strong>Background</strong>: <InlineCode>claude --bg {'<prompt>'}</InlineCode> runs in tmux</>,
           <><strong>On exit</strong>: Session detaches and persists</>,
@@ -918,7 +918,7 @@ claude ssh localhost --local`}</CodeBlock>
       </Subsection>
 
       <Subsection title="Plan Mode V2">
-        <p className="text-text-secondary mb-3">Max/Team subscribers get parallel exploration agents in plan mode:</p>
+        <p className="text-text-secondary mb-3">Assinantes Max/Team ganham agentes de exploração paralelos no plan mode:</p>
         <BulletList items={[
           <><strong>Max/Team</strong>: 3 parallel exploration agents</>,
           <><strong>Free users</strong>: 1 agent</>,
@@ -927,11 +927,11 @@ claude ssh localhost --local`}</CodeBlock>
       </Subsection>
 
       <Subsection title="Rastreamento de Contribuição IA">
-        <p className="text-text-secondary mb-3">PR descriptions include exact percentage of AI-written code using character-level matching (e.g., "93% 3-shotted by claude-opus-4-6") — stripped entirely in undercover mode.</p>
+        <p className="text-text-secondary mb-3">Descrições de PR incluem porcentagem exata de código escrito por IA usando correspondência a nível de caractere (ex.: "93% 3-shotted by claude-opus-4-6") — removido completamente no modo undercover.</p>
       </Subsection>
 
       <Subsection title="Chaves SDK API">
-        <p className="text-text-secondary mb-3">These SDK keys are baked into the binary for specific Anthropic environments. They are not user credentials:</p>
+        <p className="text-text-secondary mb-3">Essas chaves SDK estão embutidas no binário para ambientes específicos da Anthropic. Não são credenciais de usuário:</p>
         <Table
           headers={['Environment', 'Key']}
           rows={[
@@ -1025,7 +1025,7 @@ claude ssh localhost --local`}</CodeBlock>
       </Subsection>
 
       <Subsection title="Comandos Slash Ocultos">
-        <p className="text-text-secondary mb-3">26 slash commands not shown in <InlineCode>--help</InlineCode>:</p>
+        <p className="text-text-secondary mb-3">26 comandos slash não mostrados no <InlineCode>--help</InlineCode>:</p>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-2 my-4">
           {[
             ['/ctx-viz', 'Context visualizer'],
@@ -1064,7 +1064,7 @@ claude ssh localhost --local`}</CodeBlock>
       </Subsection>
 
       <Subsection title="Headers Beta da API">
-        <p className="text-text-secondary mb-3">anthropic-beta header values sent with API requests:</p>
+        <p className="text-text-secondary mb-3">Valores de header anthropic-beta enviados com requisições da API:</p>
         <Table
           headers={['Feature', 'Beta Header Value']}
           rows={[
@@ -1090,63 +1090,63 @@ claude ssh localhost --local`}</CodeBlock>
         <div className="space-y-3 my-4">
           {[
             {
-              title: 'Undercover Mode Strips All AI Evidence',
-              desc: 'When Anthropic employees contribute to public repos, a stealth system automatically strips all traces of AI involvement — commit messages, Co-Authored-By lines, model names. The prompt literally says "Do not blow your cover."',
+              title: 'Modo Undercover Remove Toda Evidência de IA',
+              desc: 'Quando funcionários da Anthropic contribuem para repos públicos, um sistema stealth automaticamente remove todos os rastros de envolvimento de IA — mensagens de commit, linhas Co-Authored-By, nomes de modelos. O prompt literalmente diz "Não quebre seu disfarce."',
               file: 'src/utils/undercover.ts',
             },
             {
-              title: 'Capybara Encoded Char-by-Char to Evade Filters',
-              desc: 'The internal model codename "capybara" is encoded as String.fromCharCode(99,97,112,121,98,97,114,97) to avoid triggering their own leak detector.',
+              title: 'Capybara Codificado Char-por-Char para Evadir Filtros',
+              desc: 'O codinome interno do modelo "capybara" é codificado como String.fromCharCode(99,97,112,121,98,97,114,97) para evitar disparar seu próprio detector de vazamentos.',
               file: 'src/buddy/types.ts:14',
             },
             {
-              title: 'Fast Mode Costs 6× More Than Normal',
-              desc: 'Hardcoded pricing reveals Opus 4.6 fast mode at $30/M input tokens vs $5 normal — same model, 6× markup just for priority inference.',
+              title: 'Modo Rápido Custa 6× Mais que o Normal',
+              desc: 'Preços hardcoded revelam Opus 4.6 modo rápido a $30/M tokens de input vs $5 normal — mesmo modelo, markup de 6× só por inferência prioritária.',
               file: 'src/utils/modelCost.ts',
             },
             {
-              title: 'Auto-Permission System is Named "YOLO"',
-              desc: 'The function that decides whether Claude can run tools without asking is literally called classifyYoloAction() — with risk levels LOW/MEDIUM/HIGH using Claude to evaluate its own tool use.',
+              title: 'Sistema de Auto-Permissão se Chama "YOLO"',
+              desc: 'A função que decide se o Claude pode rodar tools sem perguntar literalmente se chama classifyYoloAction() — com níveis de risco LOW/MEDIUM/HIGH usando o Claude para avaliar seu próprio uso de tools.',
               file: 'src/utils/permissions/yoloClassifier.ts',
             },
             {
-              title: 'Computer Use Is Codenamed "Chicago"',
-              desc: 'Full GUI automation (mouse, clicks, screenshots) is gated behind tengu_malort_pedway. Employees bypass via ALLOW_ANT_COMPUTER_USE_MCP env var.',
+              title: 'Computer Use Tem Codinome "Chicago"',
+              desc: 'Automação GUI completa (mouse, clicks, screenshots) é gated por tengu_malort_pedway. Funcionários burlam via env var ALLOW_ANT_COMPUTER_USE_MCP.',
               file: 'src/utils/computerUse/gates.ts',
             },
             {
-              title: 'Next Models Already Referenced in Code',
-              desc: 'The undercover prompt warns employees never to leak "opus-4-7" and "sonnet-4-8" — plausible next versions that don\'t publicly exist yet.',
+              title: 'Próximos Modelos Já Referenciados no Código',
+              desc: 'O prompt do undercover avisa funcionários para nunca vazar "opus-4-7" e "sonnet-4-8" — prováveis próximas versões que não existem publicamente ainda.',
               file: 'src/utils/undercover.ts:49',
             },
             {
-              title: '22 Secret Anthropic Repos Exposed',
-              desc: 'The undercover allowlist reveals 22 private repository names: anthropics/casino, anthropics/trellis, anthropics/forge-web, anthropics/mycro_manifests, anthropics/feldspar-testing, and more.',
+              title: '22 Repos Secretos da Anthropic Expostos',
+              desc: 'A allowlist do undercover revela 22 nomes de repositórios privados: anthropics/casino, anthropics/trellis, anthropics/forge-web, anthropics/mycro_manifests, anthropics/feldspar-testing, e mais.',
               file: 'src/utils/commitAttribution.ts',
             },
             {
-              title: 'Voice Mode Has Kill-Switch Named "Amber Quartz"',
-              desc: 'Voice mode exists with OAuth auth and an emergency off-switch called tengu_amber_quartz_disabled, suggesting it\'s still in active testing.',
+              title: 'Modo de Voz Tem Kill-Switch Chamado "Amber Quartz"',
+              desc: 'O modo de voz existe com auth OAuth e um interruptor de emergência chamado tengu_amber_quartz_disabled, sugerindo que ainda está sendo testado ativamente.',
               file: 'src/voice/voiceModeEnabled.ts',
             },
             {
-              title: 'AI Contributions Tracked to the Character',
-              desc: 'PR descriptions include exact percentage of AI-written code using character-level matching (e.g., "93% 3-shotted by claude-opus-4-6") — stripped entirely in undercover mode.',
+              title: 'Contribuições IA Rastreadas ao Caractere',
+              desc: 'Descrições de PR incluem porcentagem exata de código escrito por IA usando correspondência a nível de caractere (ex.: "93% 3-shotted by claude-opus-4-6") — removido completamente no modo undercover.',
               file: 'src/utils/commitAttribution.ts:325',
             },
             {
-              title: '1M Context Disabled for HIPAA Deployments',
-              desc: 'The 1M token context window (vs 200K default) can be force-disabled with CLAUDE_CODE_DISABLE_1M_CONTEXT for healthcare compliance.',
+              title: 'Contexto de 1M Desabilitado para Deploys HIPAA',
+              desc: 'A janela de contexto de 1M tokens (vs 200K padrão) pode ser forçadamente desabilitada com CLAUDE_CODE_DISABLE_1M_CONTEXT para compliance de saúde.',
               file: 'src/utils/context.ts',
             },
             {
-              title: 'Web Search Costs Exactly $0.01 Per Query',
-              desc: 'Each web search request is billed at a flat $0.01 regardless of results returned, tracked separately from token costs in the source.',
+              title: 'Busca Web Custa Exatamente $0.01 por Query',
+              desc: 'Cada requisição de busca web é cobrada a uma taxa fixa de $0.01 independente dos resultados retornados, rastreada separadamente dos custos de tokens no código-fonte.',
               file: 'src/utils/modelCost.ts',
             },
             {
-              title: 'Plan Mode V2 Spawns 3 Parallel Agents',
-              desc: 'Max/Team subscribers get 3 parallel exploration agents in plan mode; free users get 1. Override with CLAUDE_CODE_PLAN_V2_AGENT_COUNT.',
+              title: 'Plan Mode V2 Spawna 3 Agentes Paralelos',
+              desc: 'Assinantes Max/Team ganham 3 agentes de exploração paralelos no plan mode; usuários free ganham 1. Sobrescreva com CLAUDE_CODE_PLAN_V2_AGENT_COUNT.',
               file: 'src/utils/planModeV2.ts',
             },
           ].map((item, i) => (

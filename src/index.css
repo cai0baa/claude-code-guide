@@ -24,6 +24,29 @@
   --font-sans: "Inter", system-ui, sans-serif;
 }
 
+/* shadcn semantic token bridge — maps to existing project variables */
+:root {
+  --background: var(--color-bg);
+  --foreground: var(--color-text-primary);
+  --card: var(--color-bg-card);
+  --card-foreground: var(--color-text-primary);
+  --popover: var(--color-bg-secondary);
+  --popover-foreground: var(--color-text-primary);
+  --primary: var(--color-accent-green);
+  --primary-foreground: var(--color-bg);
+  --secondary: var(--color-bg-secondary);
+  --secondary-foreground: var(--color-text-secondary);
+  --muted: var(--color-bg-secondary);
+  --muted-foreground: var(--color-text-muted);
+  --accent: var(--color-accent-cyan);
+  --accent-foreground: var(--color-bg);
+  --destructive: var(--color-accent-red);
+  --border: var(--color-border);
+  --input: var(--color-bg-secondary);
+  --ring: var(--color-accent-green);
+  --radius: 0.5rem;
+}
+
 @layer base {
   * {
     scrollbar-width: thin;
